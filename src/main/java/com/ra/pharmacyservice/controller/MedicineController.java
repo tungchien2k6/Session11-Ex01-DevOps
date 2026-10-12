@@ -22,6 +22,12 @@ public class MedicineController {
         return ResponseEntity.ok(medicine);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Medicine> updateMedicine(@PathVariable Long id, @RequestBody Medicine medicine) {
+        medicine.setId(id);
+        return ResponseEntity.ok(medicineService.updateMedicine(medicine));
+    }
+
     @PostMapping
     public ResponseEntity<?> createProduct(@RequestBody Medicine medicine){
         Medicine medicineNew = medicineService.createMedicine(medicine);
