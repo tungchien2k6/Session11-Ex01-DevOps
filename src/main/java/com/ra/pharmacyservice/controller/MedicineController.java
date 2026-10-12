@@ -33,4 +33,26 @@ public class MedicineController {
         Medicine medicineNew = medicineService.createMedicine(medicine);
         return new ResponseEntity<>(medicineNew, HttpStatus.CREATED);
     }
+
+    @PutMapping("/sell/{id}")
+    public void sellMedicine(@PathVariable Long id) {
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String rsBuy = medicineService.sellMedicine(id);
+                System.out.println("Người dùng 1 : " + rsBuy);
+            }
+        });
+
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String rsBuy = medicineService.sellMedicine(id);
+                System.out.println("Người dùng 2 : " + rsBuy);
+            }
+        });
+
+        thread2.start();
+        thread1.start();
+    }
 }
